@@ -1,0 +1,15 @@
+{% extends "mycalendarapp/base.html" %}
+
+{% block content %}
+
+
+<div class="card clientDetail">
+  <div class="card-body">
+    <h5 class="card-title">{{people.first_name}} {{people.last_name}}</h5>
+    <p class="card-text">{{people.adresse}}</p>
+  </div>
+  <a href="{% url 'people_update' people.slug %}">Edit</a>
+  <a href="{% url 'people_delete' people.slug %}">Delete</a>
+</div>
+
+{% endblock %}

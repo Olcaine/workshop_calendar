@@ -1,0 +1,153 @@
+body {
+  background-color: #343A40; }
+
+nav {
+  width: 100%;
+  background-color: #696969;
+  box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75); }
+  nav ul {
+    margin: 0; }
+    nav ul li .nav-link {
+      color: white;
+      font-size: 2em;
+      font-weight: bold; }
+    nav ul li .nav-link:hover {
+      color: #343A40;
+      transition-duration: 0.5s; }
+
+.col-12 {
+  padding: 0; }
+
+.logform {
+  border: 1px solid white;
+  width: 50%;
+  margin: 15rem auto;
+  padding: 3rem;
+  border-radius: 22px;
+  color: white;
+  text-align: center; }
+  .logform legend {
+    margin-bottom: 2rem; }
+  .logform input {
+    background-color: #343A40;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white; }
+  .logform .divlog {
+    width: 100%;
+    margin: 1rem auto; }
+    .logform .divlog .login {
+      border: 2px solid white;
+      background-color: #343A40;
+      border-radius: 10%;
+      padding: 1rem 2rem;
+      color: white; }
+
+.search {
+  width: 35%;
+  margin: 14rem auto 0 auto;
+  margin-bottom: 5rem; }
+  .search .field {
+    width: 80%; }
+
+.table {
+  width: 70%;
+  margin: 1rem auto;
+  color: white; }
+  .table a {
+    color: white; }
+  .table th {
+    background-color: #DCDCDC;
+    color: #696969; }
+    .table th .createProduct {
+      color: #DCDCDC;
+      background-color: #696969; }
+
+.table-hover tbody tr:hover {
+  background-color: #696969;
+  color: white;
+  transition-duration: 0.7s; }
+  .table-hover tbody tr:hover a {
+    color: white; }
+
+.create {
+  text-align: center;
+  color: white;
+  margin-top: 10rem;
+  border: 2px solid white;
+  border-radius: 2%;
+  width: 45%;
+  padding: 2rem 0;
+  font-weight: bold; }
+  .create label {
+    display: inline-block;
+    width: 8rem; }
+  .create input {
+    background-color: #343A40;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white; }
+  .create .validate {
+    border: 2px solid white;
+    background-color: #343A40;
+    border-radius: 10%;
+    padding: 1rem 2rem;
+    margin-top: 2rem; }
+  .create .validate:hover {
+    background-color: white;
+    color: #343A40;
+    transition-duration: 0.5s; }
+
+.clientDetail {
+  width: 70%;
+  margin: 10rem auto;
+  text-align: center; }
+  .clientDetail h5 {
+    font-size: 3rem;
+    font-weight: bold; }
+  .clientDetail p {
+    font-size: 1.5rem; }
+  .clientDetail table {
+    width: 100%; }
+    .clientDetail table tr {
+      border: 1px black solid; }
+      .clientDetail table tr th {
+        border: 1px black solid; }
+      .clientDetail table tr td {
+        border: 1px black solid; }
+
+.quotation_table {
+  width: 100%;
+  color: black; }
+  .quotation_table a {
+    color: black; }
+
+.formEdit {
+  margin-top: 10rem;
+  color: white;
+  border: 2px solid white;
+  border-radius: 2%;
+  width: 39%;
+  padding: 4rem 11rem;
+  font-weight: bold;
+  text-align: left; }
+  .formEdit input {
+    background-color: #343A40;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    margin-top: 1rem; }
+  .formEdit .updateBtn {
+    border: 2px solid white;
+    background-color: #343A40;
+    border-radius: 10%;
+    padding: 1rem 2rem;
+    width: 30%;
+    margin-left: 8rem;
+    margin-top: 2rem; }
+  .formEdit .updateBtn:hover {
+    background-color: white;
+    color: #343A40;
+    transition-duration: 0.5s; }
+
+/*# sourceMappingURL=style.css.map */

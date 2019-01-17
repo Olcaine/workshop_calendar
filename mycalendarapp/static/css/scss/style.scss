@@ -1,0 +1,184 @@
+// ====================MOTHER========================= //
+body {
+    background-color: #343A40;
+}
+// ====================HEADER========================= //
+nav {
+    width: 100%;
+    background-color: #696969;
+    box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    ul {
+        margin: 0;
+        li {
+            .nav-link {
+                color: white;
+                font-size: 2em;
+                font-weight: bold;
+            }
+            .nav-link:hover {
+                color: #343A40;
+                transition-duration: 0.5s;
+            }
+        }
+    }
+}
+.col-12 {
+    padding: 0;
+}
+// ====================MAIN========================= //
+.logform {
+    border: 1px solid white;
+    width: 50%;
+    margin: 15rem auto;
+    padding: 3rem;
+    border-radius: 22px;
+    color: white;
+    text-align: center;
+    legend {
+        margin-bottom: 2rem;
+    }
+    input {
+        background-color: #343A40;
+        border: none;
+        border-bottom: 1px solid white;
+        color: white;
+    }
+    .divlog {
+        width: 100%;
+        margin: 1rem auto;
+        .login {
+            border: 2px solid white;
+            background-color: #343A40;
+            border-radius: 10%;
+            padding: 1rem 2rem;
+            color: white;
+        }
+    }
+}
+.search {
+    width: 35%;
+    margin: 14rem auto 0 auto;
+    margin-bottom: 5rem;
+    .field {
+        width: 80%;
+    }
+}
+.table {
+    width: 70%;
+    margin: 1rem auto;
+    color: white;
+    a {
+        color: white;
+    }
+    th {
+        background-color: #DCDCDC;
+        color: #696969;
+        .createProduct {
+            color: #DCDCDC;
+            background-color: #696969;
+        }
+    }
+}
+.table-hover tbody tr:hover {
+    background-color: #696969;
+    color: white;
+    transition-duration: 0.7s;
+    a {
+        color: white;
+    }
+}
+.create {
+    text-align: center;
+    color: white;
+    margin-top: 10rem;
+    border: 2px solid white;
+    border-radius: 2%;
+    width: 45%;
+    padding: 2rem 0;
+    font-weight: bold;
+    label {
+        display: inline-block;
+        width: 8rem;
+    }
+    input {
+        background-color: #343A40;
+        border: none;
+        border-bottom: 1px solid white;
+        color: white;
+    }
+    .validate {
+        border: 2px solid white;
+        background-color: #343A40;
+        border-radius: 10%;
+        padding: 1rem 2rem;
+        margin-top: 2rem;
+    }
+    .validate:hover {
+        background-color: white;
+        color: #343A40;
+        transition-duration: 0.5s;
+    }
+}
+.clientDetail {
+    width: 70%;
+    margin: 10rem auto;
+    text-align: center;
+    h5 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+    p {
+        font-size: 1.5rem;
+    }
+    table {
+        width: 100%;
+        tr {
+            border: 1px black solid;
+            th {
+                border: 1px black solid;
+            }
+            td {
+                border: 1px black solid;
+            }
+        }
+    }
+}
+.quotation_table {
+    width: 100%;
+    color: black;
+    a {
+        color: black;
+    }
+}
+.formEdit {
+    margin-top: 10rem;
+    color: white;
+    border: 2px solid white;
+    border-radius: 2%;
+    width: 39%;
+    padding: 4rem 11rem;
+    font-weight: bold;
+    text-align: left;
+    input {
+        background-color: #343A40;
+        border: none;
+        border-bottom: 1px solid white;
+        color: white;
+        margin-top: 1rem;
+    }
+    .updateBtn {
+        border: 2px solid white;
+        background-color: #343A40;
+        border-radius: 10%;
+        padding: 1rem 2rem;
+        width: 30%;
+        margin-left: 8rem;
+        margin-top: 2rem;
+    }
+    .updateBtn:hover {
+        background-color: white;
+        color: #343A40;
+        transition-duration: 0.5s;
+    }
+}
+// ====================FOOTER========================= //

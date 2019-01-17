@@ -1,0 +1,11 @@
+{% extends "mycalendarapp/base.html" %}
+{% block content %}
+
+<div class="col-8">
+<form class="comment" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <p>How you sure to delete {{object}} ?</p>
+    <input type="submit" value="Valider">
+</form>
+</div>
+
+{% endblock %}
