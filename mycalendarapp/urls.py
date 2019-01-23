@@ -13,14 +13,20 @@ from schedule.models import Calendar
 
 admin.autodiscover()
 
+workshop_event_list = WorkshopEventViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'event', WorkshopEventViewSet)
+router.register(r'workshopevent', WorkshopEventViewSet)
 
 urlpatterns = [
      url(r'^', include(router.urls)),
      url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
+
+     # url(r'^', include(mycalendarapp.urls, namespace="mycalendarapp")),
 
     url(r'^fullcalendar/(?P<calendar_slug>[-\w]+)/$',
         FullCalendarView.as_view(),
