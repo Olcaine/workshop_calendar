@@ -228,7 +228,7 @@
 
                         })
                     })
-                    // $('#calendar').fullCalendar('unselect');
+                    $('#calendar').fullCalendar('unselect');
                     return false;
                 },
                 // select: function(start, end, jsEvent, view, ressource){
@@ -242,19 +242,14 @@
                 //         $('#calendar').fullCalendar('removeEvents',event._id);
                 //        });
                 //    },
-                // eventClick: function(event, jsEvent, view) {
-                //     $('#createModal').modal();
-                //     $('#createModal').modal('.modal-title').val(event.title);
-                    //      // $('#createModal').html('#starts-at').val(event.start);
-                    //      // $('#createModal').html('#ends-at').val(event.end);
-                    //      // $("#starts-at, #ends-at").datetimepicker();
-                // },
                 eventClick: function(event, jsEvent, view) {
                     console.log(event);
                     $('#modalTitle').html(event.title);
                     $("#modalStart").html(moment(event.start).format('D MMM h:mm'));
                     $("#modalEnd").html(moment(event.end).format('D MMM h:mm'));
                     $('#modalBody').html(event.description);
+                    $('#modalRoom').html(event.room);
+                    $('#modalGear').html(event.gear);
                     $('#eventUrl').attr('href', event.url);
                     $('#fullCalModal').modal();
                 },

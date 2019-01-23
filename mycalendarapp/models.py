@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from schedule.models import Event
+from django.contrib.auth.models import User
 
 class WorkshopEvent(models.Model):
     #animateur

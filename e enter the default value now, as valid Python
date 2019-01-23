@@ -1,0 +1,23 @@
+[33mcommit 974e062a77c73c540264b6806b016472b99590ab[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Caroline <c.bove16@gmail.com>
+Date:   Mon Jan 21 15:11:33 2019 +0100
+
+    Model&View WordkShopEvent + templates workshopevent done
+
+[33mcommit b3f7a2139ad6177de59b27774f06c525bd479c36[m
+Author: Caroline <c.bove16@gmail.com>
+Date:   Mon Jan 21 11:56:33 2019 +0100
+
+    Modal CreateEvent + add in DB + see details event + see start date/h and end date/h event + CRUD WorkShopEvent
+
+[33mcommit 29a10dd56fec7bfc08732cfb64cbed28342c9830[m
+Author: Caroline <c.bove16@gmail.com>
+Date:   Fri Jan 18 14:24:33 2019 +0100
+
+    add renderClickfor delete event. But is not save in DB for the moment
+
+[33mcommit b9103537a2611a92d415b1929ed5632993ec652f[m
+Author: Caroline <c.bove16@gmail.com>
+Date:   Thu Jan 17 15:54:07 2019 +0100
+
+    my first commit lol
