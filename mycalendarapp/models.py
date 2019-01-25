@@ -13,7 +13,7 @@ class WorkshopEvent(models.Model):
     room = models.CharField(max_length=120, default="none")
     gear = models.CharField(max_length=100, blank=True)
 
-def __init__(self):
+def __str_(self):
     return ugettext('%(title)s: %(start)s - %(end)s') % {
         'title': self.title,
         'description': self.description,

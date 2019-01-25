@@ -9,17 +9,6 @@ from rest_framework import viewsets
 class WorkshopEventViewSet(viewsets.ModelViewSet):
     queryset = WorkshopEvent.objects.all()
     serializer_class = WorkshopEventSerializer
-    # filter_class = WorkshopEventFilter
-
-    # def get_serializer_class(self):
-    #     if self.request.method == 'GET':
-    #         return ReadWorkshopEventSerializer
-    #     else:
-    #         return serializer_class
-    #
-    # def list(self, request, *args, **kwargs):
-    #
-    #     queryset = self.filter_queryset(self.get_queryset())
 
 class WorkshopEventListView(ListView):
     model = WorkshopEvent

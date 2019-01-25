@@ -1,10 +1,14 @@
 from rest_framework import serializers
 from mycalendarapp.models import *
-
+from schedule.models import Event
 # Serializers define the API representation.
-class WorkshopEventSerializer(serializers.ModelSerializer):
-    # url = serializers.HyperlinkedIdentityField(view_name="api:event-detail", lookup_field = 'Event')
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = "__all__"
 
+class WorkshopEventSerializer(serializers.ModelSerializer):
+    event = EventSerializer()
     class Meta:
         model = WorkshopEvent
-        fields = ('url', 'event', 'room', 'gear')
+        fields = ('event', 'room', 'gear')
