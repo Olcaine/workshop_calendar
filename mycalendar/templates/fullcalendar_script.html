@@ -10,6 +10,16 @@
     $(document).ready(function() {
 
         $(function() {
+            function getFormData($form){
+                var unindexed_array = $form.serializeArray();
+                var indexed_array = {};
+
+                $.map(unindexed_array, function(n, i){
+                    indexed_array[n['name']] = n['value'];
+                });
+
+                return indexed_array;
+            }
             function getEventViewURL(event) {
                 if (event.existed) {
                     if ("{{ request.get_full_path }}".indexOf("/admin") != 0) {
@@ -128,11 +138,22 @@
                         start : eventData.event.start,
                         end : eventData.event.end,
                         room : eventData.room,
+                        gear : eventData.gear,
+                        color : eventData.event.color_event,
+                        creator : eventData.event.creator,
+                        description : eventData.event.description,
                     }
                 },
-                eventRender: function(event, view) {
-                    // console.log(event);
+                loading: function(bool) {
+                    if (bool) {
+                        $('#loading').show();
+                    }else{
+                        $('#loading').hide();
+                    }
                 },
+                eventRender: function(event, element) {
+
+                 },
                 eventDrop: function(event, delta, revertFunc) {
                     $.ajax({
                         type: 'POST',
@@ -172,37 +193,28 @@
                 },
 
                 select: function(start, end, jsEvent, view) {
-                    console.log(start, end, view)
+
                     $('#createModal').modal('show');
                     $('#createModal').on('shown.bs.modal', function (e) {
 
-
-                        $("#createEventForm").click(function(){
+                        $("#createEventForm").submit(function(){
+                            console.log("{% url 'workshopevent-list' %}")
+                            console.log(getFormData($(this)))
                             $.ajax({
                                 type: 'POST',
-                                url: "{% url 'api_select_create' %}",
+                                url: "{% url 'workshopevent-list' %}",
                                 dataType: 'json',
-                                data: {
-                                    'start': start.toISOString(),
-                                    'end': end.toISOString(),
-                                    'calendar_slug': '{{calendar_slug}}',
-                                },
+                                data: getFormData($(this))  ,
                                 success: function(result) {
-                                    console.log(result);
-                                    if (result.success) $('#title input').attr('value', '');
                                     $('#calendar').fullCalendar('refetchEvents');
                                 },
                             });
-
+                            return false;
                         })
                     })
                     $('#calendar').fullCalendar('unselect');
                     return false;
                 },
-                // select: function(start, end, jsEvent, view, ressource){
-                //     $('#createModal').modal('show');
-                //     console.log(start, end);
-                // },
                 // eventRender: function(event, element) {
                 //    element.find(".fc-bg").css("pointer-events","none");
                 //    element.append("<div style='position:absolute;bottom:0px;right:0px' ><button type='button' id='btnDeleteEvent' class='close'><span aria-hidden='true'>&times;</span></button></div>" );
@@ -211,13 +223,12 @@
                 //        });
                 //    },
                 eventClick: function(event, jsEvent, view) {
-                    console.log(event);
                     $('#modalTitle').html(event.title);
                     $("#modalStart").html(moment(event.start).format('D MMM h:mm'));
                     $("#modalEnd").html(moment(event.end).format('D MMM h:mm'));
-                    $('#eventContent').html(event.description);
-                    $('#eventContent').append(event.room);
-                    $('#eventContent').append(event.gear);
+                    $('#modalContent').html(event.description);
+                    $('#modalRoom').html(event.room);
+                    $('#modalGear').html(event.gear);
                     $('#eventUrl').attr('href', event.url);
                     $('#fullCalModal').modal();
                 },
