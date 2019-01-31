@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from mycalendarapp.models import *
-from mycalendar.serializers import *
+
 from rest_framework import viewsets
+from .models import *
+from .serializers import *
 
 
 class WorkshopEventViewSet(viewsets.ModelViewSet):

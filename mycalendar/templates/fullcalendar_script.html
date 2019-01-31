@@ -1,12 +1,25 @@
 {% load scheduletags i18n static %}
 
 
+<style media="screen">
+    .datepicker-container.datepicker-dropdown.datepicker-top-left {
+        z-index: 2048 !important;
+    }
+    /* .datepicker-dropdown{
+        z-index: 2048;
+    }
+    .datepicker-top-left{
+        z-index: 2048;
+    } */
+</style>
 
 <link rel='stylesheet' type='text/css' href='{% static  'fullcalendar/dist/fullcalendar.min.css' %}' />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link rel='stylesheet' type='text/css' href='{% static  '@chenfengyuan/datepicker/dist/datepicker.min.css' %}' />
 <script type='text/javascript' src='{% static 'moment/min/moment-with-locales.min.js' %}'></script>
+<!-- <link rel='stylesheet' type='text/css' href='{% static  'timepicker/dist/jquery.timepicker.css' %}' /> -->
+<!-- <script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script> -->
 <script type='text/javascript' src='{% static 'fullcalendar/dist/fullcalendar.min.js' %}'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<script type='text/javascript' src='{% static '@chenfengyuan/datepicker/dist/datepicker.min.js' %}'></script>
 <script type='text/javascript'>
     $(document).ready(function() {
 
@@ -112,6 +125,12 @@
 
             var calendar = $('#calendar').fullCalendar('getCalendar');
 
+             $('[data-toggle="datepicker"]').datepicker({
+                container : "#createModal",
+            })
+                $('#startDate, #endDate').datepicker();
+                $('#startDate, #endDate').datepicker("setDate", new Date());
+
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
@@ -152,9 +171,7 @@
                         $('#loading').hide();
                     }
                 },
-                eventRender: function(event, element) {
 
-                 },
                 eventDrop: function(event, delta, revertFunc) {
                     $.ajax({
                         type: 'POST',
@@ -195,43 +212,42 @@
 
                 select: function(start, end, jsEvent, view) {
 
-                    $("#startDate, #endDate").datepicker({
-                        autoclose: true,
-                        todayHighlight: true
-                    }).datepicker('update', new Date());
+                    // $('#startTime, #endTime').timepicker({
+                    //     'showDuration': true,
+                    //     'timeFormat': 'g:ia'
+                    // });
+
+                    // $('#startTime, #endTime').datepair();
 
 
                     $('#createModal').modal('show');
 
-                        $("#createEventForm").submit(function(){
-                            console.log("{% url 'workshopevent-list' %}")
-
-                            var formData = getFormData($(this))
-
-                            $.ajax({
-                                type: 'POST',
-                                url: "{% url 'workshopevent-list' %}",
-                                dataType: 'json',
-                                contentType: "application/json; charset=utf-8",
-                                data: JSON.stringify({
-                                    event : {
-                                        title : formData.title,
-                                        description : formData.description,
-                                        start :formData.startDate,
-                                        end :formData.endDate,
-                                        calendar : {{calendar.id}},
-                                    },
-                                    room : formData.room,
-                                    gear : formData.gear,
-                                }) ,
-                                success: function(result) {
-                                    $('#calendar').fullCalendar('refetchEvents');
-                                    // $("#startDate, #endDate").datepicker(moment(event.start, event.end));
-                                    // $("#startDate, #endDate").datepicker();
+                    $("#createEventForm").submit(function(){
+                        var formData = getFormData($(this))
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'workshopevent-list' %}",
+                            dataType: 'json',
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({
+                                event : {
+                                    title : formData.title,
+                                    description : formData.description,
+                                    start :formData.startDate,
+                                    end :formData.endDate,
+                                    calendar : {{calendar.id}},
                                 },
-                            });
-                            return false;
-                        })
+                                room : "DTC", //formData.room,
+                                gear : "sextoy",//formData.gear
+                            }) ,
+                            success: function(result) {
+                                $('#createModal').modal('hide');
+                                $('#calendar').fullCalendar('refetchEvents');
+                                // $("#startDate, #endDate").datepicker(moment(event.start, event.end));
+                            },
+                        });
+                        return false;
+                    })
                     $('#calendar').fullCalendar('unselect');
                     return false;
                 },
@@ -251,8 +267,6 @@
                     $('#modalGear').html(event.gear);
                     $('#eventUrl').attr('href', event.url);
                     $('#fullCalModal').modal();
-                    // $('#createEventForm').find('#startDate').val(event.start);
-                    // $('#createEventForm').find('#endDate').val(event.end);
                 },
 
             });
