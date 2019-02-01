@@ -11,7 +11,7 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
     event = EventSerializer()
     class Meta:
         model = WorkshopEvent
-        fields = ('event', 'room', 'gear')
+        fields = ('event', 'room', 'equipment')
 
     def create(self, validated_data):
         print validated_data
@@ -21,4 +21,4 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
                                      description=validated_data['event']["description"],
                                      calendar=validated_data['event']["calendar"])
 
-        return WorkshopEvent.objects.create(event=event, room=validated_data["room"], gear=validated_data["gear"])
+        return WorkshopEvent.objects.create(event=event, room=validated_data["room"], equipment=validated_data["equipment"])

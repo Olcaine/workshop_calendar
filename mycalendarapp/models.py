@@ -5,13 +5,21 @@ from django.db import models
 from schedule.models import Event
 from django.contrib.auth.models import User
 
+class Room(models.Model):
+    location = models.CharField(max_length=150)
+
+class Equipment(models.Model):
+    name = models.CharField(max_length=150)
+
+class Animator(models.Model):
+   user = models.ForeignKey(User)
+
 class WorkshopEvent(models.Model):
-    #animateur
-    #salle
-    #matos
+
     event = models.ForeignKey(Event)
-    room = models.CharField(max_length=120, default="none")
-    gear = models.CharField(max_length=100, blank=True)
+    room = models.ManyToManyField(Room)
+    equipment = models.ManyToManyField(Equipment)
+
 
     def __str_(self):
         return ugettext('%(title)s: %(start)s - %(end)s') % {
@@ -20,4 +28,7 @@ class WorkshopEvent(models.Model):
             'start': date(self.start, django_settings.DATE_FORMAT),
             'end': date(self.end, django_settings.DATE_FORMAT),
             'color': self.color,
-            }
+            'room': self.room,
+            'equipment': self.equipment,
+            'user': self.user,
+        }
