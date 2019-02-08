@@ -21,4 +21,4 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
                                      description=validated_data['event']["description"],
                                      calendar=validated_data['event']["calendar"])
 
-        return WorkshopEvent.objects.create(event=event, room=validated_data["room"], equipment=validated_data["equipment"])
+        return WorkshopEvent.objects.create(event=event, room=validated_data["room"], equipment=validated_data["equipment"], animator=validated_data["animator"])

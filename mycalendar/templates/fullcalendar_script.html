@@ -1,7 +1,7 @@
 {% load scheduletags i18n static %}
 
 
-<style media="screen">
+<!-- <style media="screen">
     .datepicker-container.datepicker-dropdown.datepicker-top-left {
         z-index: 2048 !important;
     }
@@ -11,7 +11,7 @@
     .datepicker-top-left{
         z-index: 2048;
     } */
-</style>
+</style> -->
 
 <link rel='stylesheet' type='text/css' href='{% static  'fullcalendar/dist/fullcalendar.min.css' %}' />
 <link rel='stylesheet' type='text/css' href='{% static  '@chenfengyuan/datepicker/dist/datepicker.min.css' %}' />
@@ -158,7 +158,8 @@
                         start : eventData.event.start,
                         end : eventData.event.end,
                         room : eventData.room,
-                        gear : eventData.gear,
+                        equipment : eventData.equipment,
+                        animator : eventData.animator,
                         color : eventData.event.color_event,
                         creator : eventData.event.creator,
                         description : eventData.event.description,
@@ -237,8 +238,9 @@
                                     end :formData.endDate,
                                     calendar : {{calendar.id}},
                                 },
-                                room : "DTC", //formData.room,
-                                gear : "sextoy",//formData.gear
+                                room : formData.room,
+                                equipment : formData.equipment,
+                                animator : formaData.animator,
                             }) ,
                             success: function(result) {
                                 $('#createModal').modal('hide');
@@ -251,20 +253,21 @@
                     $('#calendar').fullCalendar('unselect');
                     return false;
                 },
-                eventRender: function(event, element) {
-                   element.find(".fc-bg").css("pointer-events","none");
-                   element.append("<div style='position:absolute;bottom:0px;right:0px' ><button type='button' id='btnDeleteEvent' class='close'><span aria-hidden='true'>&times;</span></button></div>" );
-                   element.find("#btnDeleteEvent").click(function(){
-                        $('#calendar').fullCalendar('removeEvents',event._id);
-                       });
-                   },
+                // eventRender: function(event, element) {
+                //    element.find(".fc-bg").css("pointer-events","none");
+                //    element.append("<div style='position:absolute;bottom:0px;right:0px' ><button type='button' id='btnDeleteEvent' class='close'><span aria-hidden='true'>&times;</span></button></div>" );
+                //    element.find("#btnDeleteEvent").click(function(){
+                //         $('#calendar').fullCalendar('removeEvents',event._id);
+                //        });
+                //    },
                 eventClick: function(event, jsEvent, view) {
                     $('#modalTitle').html(event.title);
                     $("#modalStart").html(moment(event.start).format('D MMM h:mm'));
                     $("#modalEnd").html(moment(event.end).format('D MMM h:mm'));
                     $('#modalContent').html(event.description);
                     $('#modalRoom').html(event.room);
-                    $('#modalGear').html(event.gear);
+                    $('#modalEquipment').html(event.equipment);
+                    $('#modalAnimator').html(event.animator);
                     $('#eventUrl').attr('href', event.url);
                     $('#fullCalModal').modal();
                 },
