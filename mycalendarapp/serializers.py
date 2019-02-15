@@ -7,8 +7,21 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = "__all__"
 
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = "__all__"
+
+class EquipmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Equipment
+        fields = "__all__"
+
 class WorkshopEventSerializer(serializers.ModelSerializer):
     event = EventSerializer()
+    room = RoomSerializer(many=True)
+    equipment = EquipmentSerializer(many=True)
+
     class Meta:
         model = WorkshopEvent
         fields = ('event', 'room', 'equipment')

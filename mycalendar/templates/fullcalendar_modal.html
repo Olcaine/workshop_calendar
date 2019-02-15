@@ -1,30 +1,62 @@
-{% load i18n %}
-{% load static %}
+{% load i18n %} {% load static %}
 <div id="eventContent" title="Event Details">
-        <div id="eventInfo"></div>
+    <div id="eventInfo"></div>
 </div>
 
 <div id="fullCalModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="modalTitle" class="modal-title"></h4>
+            <div class="container modal-header">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <h4 id="modalTitle" class="modal-title"></h4>
+                    </div>
+                    <div class="form-group col-6">
+                        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div id="modalBody" class="modal-body">
                 <div id="eventContent" class="modal-body">
-                    <div id="modalStart"></div>
-                    <div id="modalEnd"></div>
-                    <div id="modalRoom"></div>
-                    <div id="modalEquipment"></div>
-                    <div id="modalAnimator"></div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="Description">Description :</label>
+                            <div id="modalContent"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="startDate">Date et Heure de début :</label>
+                            <div id="modalStart"></div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="endDate">Date et Heure de fin :</label>
+                            <div id="modalEnd"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="room">Lieu :</label>
+                            <div id="modalRoom" multiple>
+
+                            </div>
+
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="equipment">Equipement :</label>
+                            <div id="modalEquipment" multiple>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <h4>Animateur : </h4>
+                    <div id="modalAnimator"></div> -->
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary"><a id="eventUrl" target="_blank">Event Page</a></button>
-                <!-- <form action="update/" method="get">
-                  <input type="submit" class='fc fc-header fc-button fc-button-today fc-state-default fc-corner-left fc-corner-right' value="edit event">
-                </form> -->
+                <button type="submit" id="updateEventSubmitButton" class="btn btn-2">Modifier</button>
             </div>
         </div>
     </div>
@@ -36,7 +68,7 @@
             <div class="container modal-header">
                 <div class="row">
                     <div class="form-group col-6">
-                        <h4 id="createTitle" class="modal-title">New Event</h4>
+                        <h4 id="createTitle" class="modal-title">Nouvel Evenement</h4>
                     </div>
                     <div class="form-group col-6">
                         <button type="button" class="close" aria-label="Close" data-dismiss="modal">
@@ -45,42 +77,52 @@
                     </div>
                 </div>
             </div>
-                <div class="container modal-body">
-                    <form id="createEventForm">
-                        <div class="form-group">
-                            <label for="newEventTitle">Title</label>
-                            <input type="text" id="newEventTitle" class="form-control" name="title" />
+            <div class="container modal-body">
+                <form id="createEventForm">
+                    <div class="form-group">
+                        <label for="newEventTitle">Titre :</label>
+                        <input type="text" id="newEventTitle" class="form-control" name="title" />
+                    </div>
+                    <div class="form-group">
+                        <label for="newEventDescription">Description :</label>
+                        <input type="text" id="newEventDescription" class="form-control" name="description" />
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="startDate">Date debut :</label>
+                            <input type="text" id="startDate" class="form-control" name="startDate" data-toggle="datepicker" />
                         </div>
-                        <div class="form-group">
-                            <label for="newEventDescription">Description</label>
-                            <input type="text" id="newEventDescription" class="form-control" name="description" />
+                        <div class="form-group col-6">
+                            <label for="startTime">Heure debut :</label>
+                            <input type="text" id="startTime" class="form-control" name="startTime" />
                         </div>
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="startDate">Date debut</label>
-                                <input type="text" id="startDate" class="form-control" name="startDate" data-toggle="datepicker" />
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="startTime">Heure debut</label>
-                                <input type="text" id="startTime" class="form-control" name="startTime" />
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="endDate">Date fin :</label>
+                            <input type="text" id="endDate" class="form-control" name="endDate" data-toggle="datepicker" />
                         </div>
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="endDate">Date fin</label>
-                                <input type="text" id="endDate" class="form-control" name="endDate" data-toggle="datepicker"/>
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="endTime">Heure fin</label>
-                                <input type="text" id="endTime" class="form-control" name="endTime" />
-                            </div>
+                        <div class="form-group col-6">
+                            <label for="endTime">Heure fin :</label>
+                            <input type="text" id="endTime" class="form-control" name="endTime" />
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6" id="createRoom">
+                            <label for="room">Lieu :</label>
+                            <select id="room" multiple></select>
+                        </div>
+                        <div class="form-group col-6" id="createEquipment">
+                            <label for="equipment">Equipement :</label>
+                            <select id="equipment" multiple></select>
+                        </div>
+                    </div>
+            </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" id="createEventSubmitButton" class="btn btn-2">Enregistrer</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="modal-footer">
+                <button type="submit" id="createEventSubmitButton" class="btn btn-2">Enregistrer</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>

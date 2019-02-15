@@ -1,23 +1,12 @@
 {% load scheduletags i18n static %}
 
-
-<!-- <style media="screen">
-    .datepicker-container.datepicker-dropdown.datepicker-top-left {
-        z-index: 2048 !important;
-    }
-    /* .datepicker-dropdown{
-        z-index: 2048;
-    }
-    .datepicker-top-left{
-        z-index: 2048;
-    } */
-</style> -->
-
 <link rel='stylesheet' type='text/css' href='{% static  'fullcalendar/dist/fullcalendar.min.css' %}' />
 <link rel='stylesheet' type='text/css' href='{% static  '@chenfengyuan/datepicker/dist/datepicker.min.css' %}' />
+<link href="https://fonts.googleapis.com/css?family=Nova+Flat" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC:700" rel="stylesheet">
 <script type='text/javascript' src='{% static 'moment/min/moment-with-locales.min.js' %}'></script>
-<!-- <link rel='stylesheet' type='text/css' href='{% static  'timepicker/dist/jquery.timepicker.css' %}' /> -->
-<!-- <script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script> -->
+<link rel='stylesheet' type='text/css' href='{% static  'timepicker/dist/jquery.timepicker.css' %}' />
+<script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script>
 <script type='text/javascript' src='{% static 'fullcalendar/dist/fullcalendar.min.js' %}'></script>
 <script type='text/javascript' src='{% static '@chenfengyuan/datepicker/dist/datepicker.min.js' %}'></script>
 <script type='text/javascript'>
@@ -128,8 +117,8 @@
              $('[data-toggle="datepicker"]').datepicker({
                 container : "#createModal",
             })
-                $('#startDate, #endDate').datepicker();
-                $('#startDate, #endDate').datepicker("setDate", new Date());
+            $('#startDate, #endDate').datepicker();
+
 
             $('#calendar').fullCalendar({
                 header: {
@@ -213,13 +202,28 @@
 
                 select: function(start, end, jsEvent, view) {
 
-                    // $('#startTime, #endTime').timepicker({
-                    //     'showDuration': true,
-                    //     'timeFormat': 'g:ia'
-                    // });
+                    $('#startTime, #endTime').timepicker({
+                        'showDuration': true,
+                        'timeFormat': 'g:ia'
+                    });
 
-                    // $('#startTime, #endTime').datepair();
+                    $('#startTime, #endTime').timepicker();
+                    $('#startDate, #endDate').datepicker("setDate", start.toDate());
 
+                    $.get("{% url 'api-room-list' %}", function(data){
+                        $('#room').empty();
+                        $.each(data, function(i, room){
+                            // console.log(room);
+                            $('#room').append($(`<option>${room.location}</option>`))
+                        })
+                    });
+
+                    $.get("{% url 'api-equipment-list' %}", function(data){
+                        $('#equipment').empty();
+                        $.each(data, function(i, equipment){
+                            $('#equipment').append($(`<option>${equipment.name}</option>`))
+                        })
+                    })
 
                     $('#createModal').modal('show');
 
@@ -240,12 +244,11 @@
                                 },
                                 room : formData.room,
                                 equipment : formData.equipment,
-                                animator : formaData.animator,
+                                // animator : formaData.animator,
                             }) ,
                             success: function(result) {
                                 $('#createModal').modal('hide');
                                 $('#calendar').fullCalendar('refetchEvents');
-                                // $("#startDate, #endDate").datepicker(moment(event.start, event.end));
                             },
                         });
                         return false;
@@ -265,8 +268,12 @@
                     $("#modalStart").html(moment(event.start).format('D MMM h:mm'));
                     $("#modalEnd").html(moment(event.end).format('D MMM h:mm'));
                     $('#modalContent').html(event.description);
-                    $('#modalRoom').html(event.room);
-                    $('#modalEquipment').html(event.equipment);
+                    $('#modalRoom').html(event.room.map(function(e){
+                        return e.location
+                    }).join(", "));
+                    $('#modalEquipment').html(event.equipment.map(function(e){
+                        return e.name
+                    }).join(", "));
                     $('#modalAnimator').html(event.animator);
                     $('#eventUrl').attr('href', event.url);
                     $('#fullCalModal').modal();

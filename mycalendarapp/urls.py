@@ -23,7 +23,9 @@ router = routers.DefaultRouter()
 router.register(r'workshopevent', WorkshopEventViewSet)
 
 urlpatterns = [
-     url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls)),
+    url(r'^api/rooms/$', RoomAPIListView.as_view(), name='api-room-list'),
+    url(r'^api/equipments/$', EquipmentAPIListView.as_view(), name='api-equipment-list'),
 
      # url(r'^', include(mycalendarapp.urls, namespace="mycalendarapp")),
 
