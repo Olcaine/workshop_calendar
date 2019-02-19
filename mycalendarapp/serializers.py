@@ -48,18 +48,21 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
 #     class Meta(EventSerializer.Meta):
 #         pass
 
-    def create(self, validated_data):
-        # if "workshopevent" in request.data:
-        #     request.data["workshopevent_id"] = request.data['workshopevent']
-        #
-        # return super(WorkshopEventViewSet, self).create(request, *args, **kwargs)
+    # if "workshopevent" in request.data:
+    #     request.data["workshopevent_id"] = request.data['workshopevent']
+    #
+    #     return super(WorkshopEventViewSet, self).create(request, *args, **kwargs)
 
-        # serializer = WorkshopEventSerializer(data=data)
-        # serializer.is_valid()
-        # serializer.validated_data
-        # serializer.save()
-        #
+    # def test_workshop_data(self):
+    #
+    # serializer = WorkshopEventSerializer(data=data)
+    # serializer.is_valid(raise_exception=True)
+    # serializer.validated_data
+    # serializer.save()
+
         # return WorkshopEvent(**validated_data)
+
+    def create(self, validated_data):
 
         event = Event.objects.create(start=validated_data['event']["start"],
                                      end=validated_data['event']["end"],
