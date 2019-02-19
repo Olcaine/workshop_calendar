@@ -13,10 +13,6 @@ from schedule.models import Calendar
 
 admin.autodiscover()
 
-workshop_event_list = WorkshopEventViewSet.as_view({
-    'get': 'list',
-    'post': 'create'
-})
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()

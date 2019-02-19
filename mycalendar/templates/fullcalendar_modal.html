@@ -68,7 +68,7 @@
             <div class="container modal-header">
                 <div class="row">
                     <div class="form-group col-6">
-                        <h4 id="createTitle" class="modal-title">Nouvel Evenement</h4>
+                        <h4 id="createTitle" class="modal-title"> Création Evenement</h4>
                     </div>
                     <div class="form-group col-6">
                         <button type="button" class="close" aria-label="Close" data-dismiss="modal">
@@ -89,32 +89,32 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-6">
-                            <label for="startDate">Date debut :</label>
+                            <label for="startDate">Debut <i class="far fa-calendar-alt"></i> :</label>
                             <input type="text" id="startDate" class="form-control" name="startDate" data-toggle="datepicker" />
                         </div>
                         <div class="form-group col-6">
-                            <label for="startTime">Heure debut :</label>
+                            <label for="startTime">Debut <i class="far fa-clock"></i> :</label>
                             <input type="text" id="startTime" class="form-control" name="startTime" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-6">
-                            <label for="endDate">Date fin :</label>
+                            <label for="endDate">Fin <i class="far fa-calendar-alt"></i> :</label>
                             <input type="text" id="endDate" class="form-control" name="endDate" data-toggle="datepicker" />
                         </div>
                         <div class="form-group col-6">
-                            <label for="endTime">Heure fin :</label>
+                            <label for="endTime">Fin <i class="far fa-clock"></i> :</label>
                             <input type="text" id="endTime" class="form-control" name="endTime" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-6" id="createRoom">
                             <label for="room">Lieu :</label>
-                            <select id="room" multiple></select>
+                            <select id="room" multiple name="room"></select>
                         </div>
                         <div class="form-group col-6" id="createEquipment">
                             <label for="equipment">Equipement :</label>
-                            <select id="equipment" multiple></select>
+                            <select id="equipment" multiple name="equipment"></select>
                         </div>
                     </div>
             </div>

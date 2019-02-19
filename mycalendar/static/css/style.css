@@ -9,7 +9,10 @@
     color: white;
     text-align: left;
     font-family: 'Amatic SC', cursive;
-    font-size: 30px; }
+    font-size: 28px; }
+
+.fa-pencil-alt:before {
+  font-size: 27px; }
 
 .form-group input {
   font-family: 'Nova Flat', cursive;

@@ -4,6 +4,7 @@
 <link rel='stylesheet' type='text/css' href='{% static  '@chenfengyuan/datepicker/dist/datepicker.min.css' %}' />
 <link href="https://fonts.googleapis.com/css?family=Nova+Flat" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <script type='text/javascript' src='{% static 'moment/min/moment-with-locales.min.js' %}'></script>
 <link rel='stylesheet' type='text/css' href='{% static  'timepicker/dist/jquery.timepicker.css' %}' />
 <script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script>
@@ -16,10 +17,17 @@
             function getFormData($form){
                 var unindexed_array = $form.serializeArray();
                 var indexed_array = {};
-
-                $.map(unindexed_array, function(n, i){
-                    indexed_array[n['name']] = n['value'];
+                $.each(unindexed_array, function(i, input){
+                    if(indexed_array.hasOwnProperty(input.name)){
+                        if(!Array.isArray(indexed_array[input.name])){
+                            indexed_array[input.name] = [indexed_array[input.name]];
+                        }
+                        indexed_array[input.name].push(input.value);
+                    } else {
+                        indexed_array[input.name] = input.value;
+                    }
                 });
+                console.log(indexed_array);
 
                 return indexed_array;
             }
@@ -214,14 +222,14 @@
                         $('#room').empty();
                         $.each(data, function(i, room){
                             // console.log(room);
-                            $('#room').append($(`<option>${room.location}</option>`))
+                            $('#room').append($(`<option value=${room.id}>${room.location}</option>`))
                         })
                     });
 
                     $.get("{% url 'api-equipment-list' %}", function(data){
                         $('#equipment').empty();
                         $.each(data, function(i, equipment){
-                            $('#equipment').append($(`<option>${equipment.name}</option>`))
+                            $('#equipment').append($(`<option value=${equipment.id}>${equipment.name}</option>`))
                         })
                     })
 
