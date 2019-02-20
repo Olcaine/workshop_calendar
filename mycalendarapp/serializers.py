@@ -22,8 +22,8 @@ class EquipmentSerializer(serializers.ModelSerializer):
 
 class WorkshopEventSerializer(serializers.ModelSerializer):
     event = EventSerializer()
-    room = RoomSerializer(many=True)
-    equipment = EquipmentSerializer(many=True)
+    room = RoomSerializer(read_only=True, many=True)
+    equipment = EquipmentSerializer(read_only=True, many=True)
 
     class Meta:
         model = WorkshopEvent
@@ -31,11 +31,15 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
-
+        print self.data
         event = Event.objects.create(start=validated_data['event']["start"],
                                      end=validated_data['event']["end"],
                                      title=validated_data['event']["title"],
                                      description=validated_data['event']["description"],
                                      calendar=validated_data['event']["calendar"])
-
-        return WorkshopEvent.objects.create(event=event, room=validated_data["room"], equipment=validated_data["equipment"])
+        workshop_event = WorkshopEvent.objects.create(event=event)
+        for room_id in self.context['request'].data["room"]:
+            workshop_event.room.add(Room.objects.get(id=room_id))
+        for equipment_id in self.context['request'].data["equipment"]:
+            workshop_event.equipment.add(Equipment.objects.get(id=equipment_id))
+        return workshop_event

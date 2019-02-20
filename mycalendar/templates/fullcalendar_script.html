@@ -10,6 +10,7 @@
 <script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script>
 <script type='text/javascript' src='{% static 'fullcalendar/dist/fullcalendar.min.js' %}'></script>
 <script type='text/javascript' src='{% static '@chenfengyuan/datepicker/dist/datepicker.min.js' %}'></script>
+<script type='text/javascript' src='{% static '@chenfengyuan/datepicker/i18n/datepicker.fr-FR.js' %}'></script>
 <script type='text/javascript'>
     $(document).ready(function() {
 
@@ -123,9 +124,10 @@
             var calendar = $('#calendar').fullCalendar('getCalendar');
 
              $('[data-toggle="datepicker"]').datepicker({
+                language: 'fr-FR',
                 container : "#createModal",
             })
-            $('#startDate, #endDate').datepicker();
+            $('#startDate, #endDate').datepicker({language: 'fr-FR'});
 
 
             $('#calendar').fullCalendar({
@@ -237,6 +239,20 @@
 
                     $("#createEventForm").submit(function(){
                         var formData = getFormData($(this))
+                        if(!formData.startTime){
+                            formData.startTime = "0:01"
+                        }
+                        if(!formData.endTime){
+                            formData.endTime = "23:59"
+                        }
+                        if(!Array.isArray(formData.equipment)){
+                            formData.equipment = [formData.equipment]
+                        }
+                        if(!Array.isArray(formData.room)){
+                            formData.room = [formData.room]
+                        }
+                        start = moment(`${formData.startDate} ${formData.startTime}`, "DD/MM/YYYY HH:mm")
+                        end = moment(`${formData.endDate} ${formData.endTime}`, "DD/MM/YYYY HH:mm")
                         $.ajax({
                             type: 'POST',
                             url: "{% url 'workshopevent-list' %}",
@@ -246,8 +262,8 @@
                                 event : {
                                     title : formData.title,
                                     description : formData.description,
-                                    start :formData.startDate,
-                                    end :formData.endDate,
+                                    start : start.format("YYYY-MM-DDTHH:mm"),
+                                    end : end.format("YYYY-MM-DDTHH:mm"),
                                     calendar : {{calendar.id}},
                                 },
                                 room : formData.room,
