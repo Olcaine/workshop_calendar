@@ -1,16 +1,6 @@
 {% load scheduletags i18n static %}
 
-<link rel='stylesheet' type='text/css' href='{% static  'fullcalendar/dist/fullcalendar.min.css' %}' />
-<link rel='stylesheet' type='text/css' href='{% static  '@chenfengyuan/datepicker/dist/datepicker.min.css' %}' />
-<link href="https://fonts.googleapis.com/css?family=Nova+Flat" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Amatic+SC:700" rel="stylesheet">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<script type='text/javascript' src='{% static 'moment/min/moment-with-locales.min.js' %}'></script>
-<link rel='stylesheet' type='text/css' href='{% static  'timepicker/dist/jquery.timepicker.css' %}' />
-<script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script>
-<script type='text/javascript' src='{% static 'fullcalendar/dist/fullcalendar.min.js' %}'></script>
-<script type='text/javascript' src='{% static '@chenfengyuan/datepicker/dist/datepicker.min.js' %}'></script>
-<script type='text/javascript' src='{% static '@chenfengyuan/datepicker/i18n/datepicker.fr-FR.js' %}'></script>
+
 <script type='text/javascript'>
     $(document).ready(function() {
 
@@ -88,33 +78,7 @@
                 $('#EditorDelete').html(tYPE);
             }
 
-            function getCookie(name) {
-                var cookieValue = null;
-                if (document.cookie && document.cookie != '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-            var csrftoken = getCookie('csrftoken');
-
-            function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-            }
-            $.ajaxSetup({
-                beforeSend: function(xhr, settings) {
-                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                }
-            });
+            
 
             var date = new Date();
             var d = date.getDate();
@@ -130,40 +94,11 @@
             $('#startDate, #endDate').datepicker({language: 'fr-FR'});
 
 
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                timezone: 'local',
-                scrollTime: '08:00',
-                businessHours: {
-                    start: '8:00',
-                    end: '18:00',
-                },
-                selectable: true,
-                editable: true,
-                eventLimit: true,
-                droppable: true,
-                editable: true,
-                selectHelper: true,
-                eventSources : [{
-                    url : "{% url 'workshopevent-list' %}"
-                }],
-                eventDataTransform(eventData){
-                    return {
-                        title : eventData.event.title,
-                        start : eventData.event.start,
-                        end : eventData.event.end,
-                        room : eventData.room,
-                        equipment : eventData.equipment,
-                        animator : eventData.animator,
-                        color : eventData.event.color_event,
-                        creator : eventData.event.creator,
-                        description : eventData.event.description,
-                    }
-                },
+            $('#calendar').fullCalendar(
+                // eventSources : [{
+                //     url : "{% url 'workshopevent-list' %}"
+                // }],
+
                 loading: function(bool) {
                     if (bool) {
                         $('#loading').show();
@@ -210,101 +145,11 @@
                     return false;
                 },
 
-                select: function(start, end, jsEvent, view) {
 
-                    $('#startTime, #endTime').timepicker({
-                        'showDuration': true,
-                        'timeFormat': 'g:ia'
-                    });
 
-                    $('#startTime, #endTime').timepicker();
-                    $('#startDate, #endDate').datepicker("setDate", start.toDate());
 
-                    $.get("{% url 'api-room-list' %}", function(data){
-                        $('#room').empty();
-                        $.each(data, function(i, room){
-                            // console.log(room);
-                            $('#room').append($(`<option value=${room.id}>${room.location}</option>`))
-                        })
-                    });
-
-                    $.get("{% url 'api-equipment-list' %}", function(data){
-                        $('#equipment').empty();
-                        $.each(data, function(i, equipment){
-                            $('#equipment').append($(`<option value=${equipment.id}>${equipment.name}</option>`))
-                        })
-                    })
-
-                    $('#createModal').modal('show');
-
-                    $("#createEventForm").submit(function(){
-                        var formData = getFormData($(this))
-                        if(!formData.startTime){
-                            formData.startTime = "0:01"
-                        }
-                        if(!formData.endTime){
-                            formData.endTime = "23:59"
-                        }
-                        if(!Array.isArray(formData.equipment)){
-                            formData.equipment = [formData.equipment]
-                        }
-                        if(!Array.isArray(formData.room)){
-                            formData.room = [formData.room]
-                        }
-                        start = moment(`${formData.startDate} ${formData.startTime}`, "DD/MM/YYYY HH:mm")
-                        end = moment(`${formData.endDate} ${formData.endTime}`, "DD/MM/YYYY HH:mm")
-                        $.ajax({
-                            type: 'POST',
-                            url: "{% url 'workshopevent-list' %}",
-                            dataType: 'json',
-                            contentType: "application/json; charset=utf-8",
-                            data: JSON.stringify({
-                                event : {
-                                    title : formData.title,
-                                    description : formData.description,
-                                    start : start.format("YYYY-MM-DDTHH:mm"),
-                                    end : end.format("YYYY-MM-DDTHH:mm"),
-                                    calendar : {{calendar.id}},
-                                },
-                                room : formData.room,
-                                equipment : formData.equipment,
-                                // animator : formaData.animator,
-                            }) ,
-                            success: function(result) {
-                                $('#createModal').modal('hide');
-                                $('#calendar').fullCalendar('refetchEvents');
-                            },
-                        });
-                        return false;
-                    })
-                    $('#calendar').fullCalendar('unselect');
-                    return false;
-                },
-                // eventRender: function(event, element) {
-                //    element.find(".fc-bg").css("pointer-events","none");
-                //    element.append("<div style='position:absolute;bottom:0px;right:0px' ><button type='button' id='btnDeleteEvent' class='close'><span aria-hidden='true'>&times;</span></button></div>" );
-                //    element.find("#btnDeleteEvent").click(function(){
-                //         $('#calendar').fullCalendar('removeEvents',event._id);
-                //        });
-                //    },
-                eventClick: function(event, jsEvent, view) {
-                    $('#modalTitle').html(event.title);
-                    $("#modalStart").html(moment(event.start).format('D MMM h:mm'));
-                    $("#modalEnd").html(moment(event.end).format('D MMM h:mm'));
-                    $('#modalContent').html(event.description);
-                    $('#modalRoom').html(event.room.map(function(e){
-                        return e.location
-                    }).join(", "));
-                    $('#modalEquipment').html(event.equipment.map(function(e){
-                        return e.name
-                    }).join(", "));
-                    $('#modalAnimator').html(event.animator);
-                    $('#eventUrl').attr('href', event.url);
-                    $('#fullCalModal').modal();
-                },
 
             });
-
         });
     });
 </script>

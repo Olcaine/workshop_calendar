@@ -1,7 +1,3 @@
-// body{
-//     background-image: url("http://sifran.free.fr/encre/encre_8250.jpg");
-//     background-size: cover;
-// }
 #eventContent{
     background-image: url("https://www.onlygfx.com/wp-content/uploads/2018/07/5-light-blue-watercolor-splash-background-3-1024x925.jpg");
     background-size: cover;
@@ -140,4 +136,25 @@ h2{
         font-size: 1em;
         font-family: 'Nova Flat', cursive;
     }
+}
+
+ul{
+    li{
+        list-style: none;
+        a{
+          color: #BF3638;
+        }
+        a:hover{
+        text-decoration: none;
+        color: #258A82;
+        }
+    }
+}
+
+li{
+    list-style: none;
+}
+
+h1{
+    text-align: left;
 }

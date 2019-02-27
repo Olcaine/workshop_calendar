@@ -10,11 +10,11 @@ class WorkshopEventViewSet(viewsets.ModelViewSet):
     queryset = WorkshopEvent.objects.all()
     serializer_class = WorkshopEventSerializer
 
-    def post(self, request, *args, **kwargs):
-        # Create a serializer with request.data
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+    def get_queryset(self):
+        calendar_id = self.request.query_params.get("calendar_id", None)
+        if calendar_id:
+            return self.queryset.filter(event__calendar__id=calendar_id)
+        return self.queryset
 
 class RoomAPIListView(ListAPIView):
     queryset = Room.objects.all()

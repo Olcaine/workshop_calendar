@@ -103,4 +103,18 @@ h2 {
     font-size: 1em;
     font-family: 'Nova Flat', cursive; }
 
+ul li {
+  list-style: none; }
+  ul li a {
+    color: #BF3638; }
+  ul li a:hover {
+    text-decoration: none;
+    color: #258A82; }
+
+li {
+  list-style: none; }
+
+h1 {
+  text-align: left; }
+
 /*# sourceMappingURL=style.css.map */
