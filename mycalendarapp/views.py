@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from .models import *
 from .serializers import *
 from rest_framework.generics import ListAPIView
+from rest_framework.views import APIView
 
 class WorkshopEventViewSet(viewsets.ModelViewSet):
     queryset = WorkshopEvent.objects.all()

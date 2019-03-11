@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from schedule.models import Event
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Room(models.Model):
     location = models.CharField(max_length=150)
@@ -29,14 +30,13 @@ class WorkshopEvent(models.Model):
     def __unicode__(self):
         return self.event.title
 
-    # def __str_(self):
-    #     return ugettext('%(title)s: %(start)s - %(end)s') % {
-    #         'title': self.title,
-    #         'description': self.description,
-    #         'start': date(self.start, django_settings.DATE_FORMAT),
-    #         'end': date(self.end, django_settings.DATE_FORMAT),
-    #         'color': self.color,
-    #         'room': self.room,
-    #         'equipment': self.equipment,
-    #         'user': self.user,
-    #     }
+    def get_absolute_url(self):
+        return reverse('workshopevent-detail', args=[self.id])
+
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
+
+@receiver(post_delete, sender=WorkshopEvent)
+def delete_event(sender, instance, **kwargs):
+    instance.event.delete()

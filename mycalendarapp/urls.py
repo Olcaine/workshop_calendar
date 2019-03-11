@@ -22,8 +22,9 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/rooms/$', RoomAPIListView.as_view(), name='api-room-list'),
     url(r'^api/equipments/$', EquipmentAPIListView.as_view(), name='api-equipment-list'),
+    # url(r'^workshopevent/delete/(?P<pk>\d+)', views.WorkshopEventViewSet.as_view({'delete'}), name='delete_event'),
 
-     # url(r'^', include(mycalendarapp.urls, namespace="mycalendarapp")),
+    # url(r'^', include(mycalendarapp.urls, namespace="mycalendarapp")),
 
     url(r'^fullcalendar/(?P<calendar_slug>[-\w]+)/$',
         FullCalendarView.as_view(),

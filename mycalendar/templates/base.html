@@ -11,6 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nova+Flat" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="{% static "x-editable/dist/jquery-editable/css/jquery-editable.css" %}" type="text/css" media="screen">
         <link rel="stylesheet" href="{% static "css/style.css" %}" type="text/css" media="screen">
         <link rel='stylesheet' type='text/css' href='{% static  'timepicker/dist/jquery.timepicker.css' %}' />
         {% block extra_head %}
@@ -43,20 +44,18 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <!-- <asp:ScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server"></asp:ScriptManager> -->
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row" >
             <!-- SEARCH WEEKEND FEATURE -->
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
                         <div class="row">
-                          <div class="col-md-3">
+                          <div class="col-md-3 asideCards">
                             <div class="card">
                               <div class="card-header">
-                                <h4 class="card-title">Calendriers Disponibles</h4>
+                                <h4 class="card-title">Calendriers</h4>
                               </div>
                               <div class="card-body">
                                 <!-- the events -->
@@ -89,8 +88,6 @@
                               <!-- /. box -->
                             </div>
                           </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -99,6 +96,7 @@
         <script type="text/javascript" src="{% static "jquery/dist/jquery.js" %}"></script>
         <script type="text/javascript" src="{% static "bootstrap/dist/js/bootstrap.js" %}"></script>
         <script type='text/javascript' src='{% static 'moment/min/moment-with-locales.min.js' %}'></script>
+        <script type='text/javascript' src='{% static 'x-editable/dist/jquery-editable/js/jquery-editable-poshytip.js' %}'></script>
         <script type='text/javascript' src='{% static 'timepicker/dist/jquery.timepicker.min.js' %}'></script>
         <script type='text/javascript' src='{% static 'fullcalendar/dist/fullcalendar.min.js' %}'></script>
         <script type='text/javascript' src='{% static '@chenfengyuan/datepicker/dist/datepicker.min.js' %}'></script>
@@ -192,6 +190,7 @@
                             color : eventData.event.color_event,
                             creator : eventData.event.creator,
                             description : eventData.event.description,
+                            eventUrl : eventData.url
                         }
                     },
                     select: function(start, end, jsEvent, view) {
@@ -234,11 +233,12 @@
                             return e.name
                         }).join(", "));
                         $('#modalAnimator').html(event.animator);
-                        $('#eventUrl').attr('href', event.url);
-                        // $("#btnDeleteEvent").html(event);
+                        // $('#eventUrl').attr('href', event.url);
+                        $('#btnDeleteEvent').data('delete-url', event.eventUrl);
                         $('#fullCalModal').modal();
                     },
                 })
+
                 $(".checkbox").on('change',function() {
                     $('#calendar').fullCalendar( 'removeEventSources')
                     $(".checkbox:checked").each(function(i, checkbox){
@@ -247,8 +247,46 @@
                     $('#calendar').fullCalendar( 'refetchEvents' )
                 });
 
+
+
+                $('#fullCalModal').on('shown.bs.modal', function (e) {
+                    $.fn.editable.defaults.mode = 'inline';
+                    var updateUrl = $('#btnDeleteEvent').data("delete-url");
+                    console.log(updateUrl);
+                      $('#modalTitle').editable({
+                              type: 'text',
+                              onblur: 'submit',
+                              url: updateUrl,
+                              ajaxOptions:{
+                                  type:'patch',
+                                  dataType: 'json',
+                                  contentType: 'application/json',
+                             },
+                             params: function(params) {
+                                return JSON.stringify({
+                                    "event" : {
+                                        "title" : params.value
+                                    }
+                                })
+                            }
+
+                      });
+
+                    $("#btnDeleteEvent").off("click").on('click', function(){
+                       var btnDeleteURL = $(this).data("delete-url");
+                        $.ajax({
+                           url: btnDeleteURL,
+                           type: "DELETE",
+                          success: function(data){
+                              $('#calendar').fullCalendar( 'refetchEvents' )
+                              $('#fullCalModal').modal('hide');
+                           },
+                        });
+                        return false;
+                  });
+              })
+
                 $('#createModal').on('shown.bs.modal', function (e) {
-                    console.log($("#createEventForm"));
                     $("#createEventForm").off("submit").submit(function(){
                       var formData = getFormData($(this))
 
@@ -290,8 +328,26 @@
                       });
                       return false;
                     })
-                  });
-                })
+                });
+            })
         </script>
     </body>
 </html>
+
+<!-- essais pour l'update event, mais problème de chargement -->
+
+<!-- $('#fullCalModal').editable({
+      params: function(params) {
+        var data = {};
+        data['id'] = params.pk;
+        data[params.name] = params.value;
+        return data;
+      }
+    });
+    $('#fullCalModal').editable({
+      params: function(params) {
+        return JSON.stringify(params);
+      }
+    }); -->
+
+<!-- fin essais pour l'update event -->

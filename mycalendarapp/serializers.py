@@ -24,10 +24,11 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
     event = EventSerializer()
     room = RoomSerializer(read_only=True, many=True)
     equipment = EquipmentSerializer(read_only=True, many=True)
+    url = serializers.CharField(source='get_absolute_url', read_only=True)
 
     class Meta:
         model = WorkshopEvent
-        fields = ('id', 'event', 'room', 'equipment')
+        fields = ('id', 'event', 'room', 'equipment', 'url')
 
 
     def create(self, validated_data):
@@ -43,3 +44,12 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
         for equipment_id in self.context['request'].data["equipment"]:
             workshop_event.equipment.add(Equipment.objects.get(id=equipment_id))
         return workshop_event
+
+    def update(self, instance, validated_data):
+        if "event" in validated_data:
+            fieldname = validated_data["event"].keys()[0]
+            value = validated_data["event"][fieldname]
+            setattr(instance.event, fieldname, value)
+            instance.event.save()
+            return instance
+        return serializers.ModelSerializer.update(self, instance, validated_data)
