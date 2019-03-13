@@ -67,6 +67,15 @@ border: none;
     #modalStart, #modalEnd, #modalRoom, #modalEquipment, #modalContent{
         font-size: 12px;
         font-family: 'Nova Flat', cursive;
+        color: black;
+    }
+}
+
+#modalContent{
+    a{
+    }
+    a:hover{
+        color: black;
     }
 }
 
@@ -188,4 +197,9 @@ a:not([href]):not([tabindex]) {
 a:not([href]):not([tabindex]):hover {
     color: white;
     text-decoration: none;
+}
+
+
+.editable-submit, .editable-cancel{
+    display: none;
 }

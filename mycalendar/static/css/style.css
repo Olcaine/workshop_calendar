@@ -52,7 +52,11 @@
 
 #eventContent #modalStart, #eventContent #modalEnd, #eventContent #modalRoom, #eventContent #modalEquipment, #eventContent #modalContent {
   font-size: 12px;
-  font-family: 'Nova Flat', cursive; }
+  font-family: 'Nova Flat', cursive;
+  color: black; }
+
+#modalContent a:hover {
+  color: black; }
 
 #createEquipment, #createRoom {
   text-align: center; }
@@ -139,5 +143,8 @@ a:not([href]):not([tabindex]) {
 a:not([href]):not([tabindex]):hover {
   color: white;
   text-decoration: none; }
+
+.editable-submit, .editable-cancel {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

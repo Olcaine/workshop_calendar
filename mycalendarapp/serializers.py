@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
 from mycalendarapp.models import *
 from schedule.models import Event
+
 # Serializers define the API representation.
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
