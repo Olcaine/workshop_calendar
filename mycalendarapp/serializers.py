@@ -38,7 +38,7 @@ class WorkshopEventSerializer(serializers.ModelSerializer):
                                      end=validated_data['event']["end"],
                                      title=validated_data['event']["title"],
                                      description=validated_data['event']["description"],
-                                     calendar=validated_data['event']["calendar"])
+                                     calendar=validated_data['event']["calendar"]),
         workshop_event = WorkshopEvent.objects.create(event=event)
         for room_id in self.context['request'].data["room"]:
             workshop_event.room.add(Room.objects.get(id=room_id))

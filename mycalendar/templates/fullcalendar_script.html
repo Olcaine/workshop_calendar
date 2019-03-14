@@ -95,10 +95,6 @@
 
 
             $('#calendar').fullCalendar(
-                // eventSources : [{
-                //     url : "{% url 'workshopevent-list' %}"
-                // }],
-
                 loading: function(bool) {
                     if (bool) {
                         $('#loading').show();
@@ -107,43 +103,7 @@
                     }
                 },
 
-                eventDrop: function(event, delta, revertFunc) {
-                    $.ajax({
-                        type: 'POST',
-                        url: "{% url 'api_move_or_resize' %}",
-                        dataType: 'json',
-                        data: {
-                            'id': event.id,
-                            'event_id': event.event_id,
-                            'existed': event.existed,
-                            'delta': delta.asMinutes(),
-                        },
-                        success: function(result) {
-                            if (result.success) $('#feedback input').attr('value', '');
-                            $('#calendar').fullCalendar('refetchEvents');
-                        },
-                    });
-                    return false;
-                },
-                eventResize: function(event, delta, revertFunc) {
-                    $.ajax({
-                        type: 'POST',
-                        url: "{% url 'api_move_or_resize' %}",
-                        dataType: 'json',
-                        data: {
-                            'id': event.id,
-                            'event_id': event.event_id,
-                            'existed': event.existed,
-                            'delta': delta.asMinutes(),
-                            'resize': true,
-                        },
-                        success: function(result) {
-                            if (result.success) $('#feedback input').attr('value', '');
-                            $('#calendar').fullCalendar('refetchEvents');
-                        },
-                    });
-                    return false;
-                },
+
 
 
             });

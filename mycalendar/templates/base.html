@@ -192,7 +192,7 @@
                         end: eventData.event.end,
                         room: eventData.room,
                         equipment: eventData.equipment,
-                        animator: eventData.animator,
+                        // animator: eventData.animator,
                         color: eventData.event.color_event,
                         creator: eventData.event.creator,
                         description: eventData.event.description,
@@ -200,6 +200,44 @@
                     }
                     return data
                 },
+
+                //     eventDrop: function(event, delta, revertFunc) {
+                //     $.ajax({
+                //         type: 'POST',
+                //         url: "{% url 'api_move_or_resize' %}",
+                //         dataType: 'json',
+                //         data: {
+                //             'id': event.id,
+                //             'event_id': event.event_id,
+                //             'existed': event.existed,
+                //             'delta': delta.asMinutes(),
+                //         },
+                //         success: function(result) {
+                //             if (result.success) $('#feedback input').attr('value', '');
+                //             $('#calendar').fullCalendar('refetchEvents');
+                //         },
+                //     });
+                //     return false;
+                // },
+                //     eventResize: function(event, delta, revertFunc) {
+                //     $.ajax({
+                //         type: 'POST',
+                //         url: "{% url 'api_move_or_resize' %}",
+                //         dataType: 'json',
+                //         data: {
+                //             'id': event.id,
+                //             'event_id': event.event_id,
+                //             'existed': event.existed,
+                //             'delta': delta.asMinutes(),
+                //             'resize': true,
+                //         },
+                //         success: function(result) {
+                //             if (result.success) $('#feedback input').attr('value', '');
+                //             $('#calendar').fullCalendar('refetchEvents');
+                //         },
+                //     });
+                //     return false;
+                // },
                 select: function(start, end, jsEvent, view) {
 
                     $('#startTime, #endTime').timepicker({
@@ -268,7 +306,8 @@
                     $('#btnDeleteEvent').data('delete-url', event.eventUrl);
                     $('#fullCalModal').modal();
                 },
-            })
+            });
+
 
             $(".checkbox").on('change', function() {
                 $('#calendar').fullCalendar('removeEventSources')
@@ -384,7 +423,41 @@
                     params: function(params) {
                         return JSON.stringify({
                             "event": {
-                                "end":  moment(`${$("#modalEnd").html()} ${params.value}`, 'D/MM/Y HH:mm').format("YYYY-MM-DDTHH:mm")
+                                "end": moment(`${$("#modalEnd").html()} ${params.value}`, 'D/MM/Y HH:mm').format("YYYY-MM-DDTHH:mm")
+                            }
+                        })
+                    }
+                });
+                $("#modalRoom").editable({
+                    type: 'select',
+                    onblur: 'submit',
+                    url: updateUrl,
+                    ajaxOptions: {
+                        type: 'patch',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                    },
+                    params: function(params) {
+                        return JSON.stringify({
+                            "event": {
+                                "room": params.value
+                            }
+                        })
+                    }
+                });
+                $("#modalEquipment").editable({
+                    type: 'select',
+                    onblur: 'submit',
+                    url: updateUrl,
+                    ajaxOptions: {
+                        type: 'patch',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                    },
+                    params: function(params) {
+                        return JSON.stringify({
+                            "event": {
+                                "equipment": params.value
                             }
                         })
                     }

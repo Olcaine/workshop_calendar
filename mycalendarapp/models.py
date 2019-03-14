@@ -18,9 +18,6 @@ class Equipment(models.Model):
     def __unicode__(self):
         return self.name
 
-# class Animator(models.Model):
-#    user = models.ForeignKey(User)
-
 class WorkshopEvent(models.Model):
 
     event = models.ForeignKey(Event)

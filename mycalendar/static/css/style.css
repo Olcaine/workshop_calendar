@@ -58,6 +58,14 @@
 #modalContent a:hover {
   color: black; }
 
+#modalStart, #modalEnd, #startTimeUpdate, #endTimeUpdate {
+  color: black;
+  font-weight: bold; }
+
+#startTimeUpdate, #endTimeUpdate {
+  font-size: 12px;
+  font-family: 'Nova Flat', cursive; }
+
 #createEquipment, #createRoom {
   text-align: center; }
 
